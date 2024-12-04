@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/circuit-breaker-bookstore/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/circuit-breaker-reading/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-item-proj/item-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-item-proj/order-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-guide-proj/circuit-breaker-bookstore/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-guide-proj/circuit-breaker-reading/src/main/java" charset="UTF-8" />
   </component>
