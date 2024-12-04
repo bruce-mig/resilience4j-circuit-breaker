@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: circuit-breaker-bookstore
+server:
+  port: 8090
