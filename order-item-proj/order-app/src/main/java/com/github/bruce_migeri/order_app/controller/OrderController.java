@@ -1,5 +1,6 @@
 package com.github.bruce_migeri.order_app.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,13 @@ public class OrderController {
     }
 
     @GetMapping("/order")
+    @CircuitBreaker(name = ORDER_SERVICE, fallbackMethod = "orderFallback")
     public ResponseEntity<String> createOrder() {
         String response = restTemplate.getForObject("http://localhost:8081/item", String.class);
-        return new ResponseEntity<String>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public ResponseEntity<String> orderFallback(Exception e) {
-        return new ResponseEntity<String>("Item service is down", HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>("Item service is down", HttpStatus.OK);
     }
 }
