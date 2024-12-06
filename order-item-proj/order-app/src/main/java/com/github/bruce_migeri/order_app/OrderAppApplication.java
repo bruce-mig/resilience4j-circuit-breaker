@@ -10,12 +10,17 @@ import java.util.stream.IntStream;
 public class OrderAppApplication {
 
 	public static void main(String[] args) {
-		// Bulkhead
-		/*SpringApplication.run(OrderAppApplication.class, args);
+		SpringApplication.run(OrderAppApplication.class, args);
+	}
+
+	// Bulkhead
+	/*public static void main(String[] args) {
+
+		SpringApplication.run(OrderAppApplication.class, args);
 		int i=1;
 		IntStream.rangeClosed(i, 10).parallel().forEach(t -> {
 			String response = new RestTemplate().getForObject("http://localhost:8080/bulk-head", String.class);
-		});*/
-	}
+		});
+	}*/
 
 }
