@@ -23,7 +23,7 @@ resilience4j:
 #  bulkhead: # semaphore
 #    instances:
 #      orderService:
-#        max-wait-duration: 000
+#        max-wait-duration: 5000
 #        max-concurrent-calls: 5
   thread-pool-bulkhead:
     instances:
@@ -31,6 +31,7 @@ resilience4j:
         max-thread-pool-size: 1
         core-thread-pool-size: 1
         queue-capacity: 1
+        writable-stack-trace-enabled: true
   ratelimiter:
     instances:
       orderService:
