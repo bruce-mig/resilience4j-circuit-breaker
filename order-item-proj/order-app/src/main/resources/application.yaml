@@ -37,7 +37,7 @@ resilience4j:
       orderService:
         limit-for-period: 2
         limit-refresh-period: 4s
-        timeout-duration: 0
+        timeout-duration: 10s
         register-health-indicator: true
         event-consumer-buffer-size: 100
 
