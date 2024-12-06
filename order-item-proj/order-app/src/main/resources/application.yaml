@@ -14,7 +14,33 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
         waitDurationInOpenState: 5s
-        slidingWindowType: COUNT_BASED
+        sliding-window-type: COUNT_BASED
+  retry:
+    instances:
+      orderService:
+        max-attempts: 3
+        wait-duration: 5000
+#  bulkhead: # semaphore
+#    instances:
+#      orderService:
+#        max-wait-duration: 000
+#        max-concurrent-calls: 5
+  thread-pool-bulkhead:
+    instances:
+      orderService:
+        max-thread-pool-size: 1
+        core-thread-pool-size: 1
+        queue-capacity: 1
+  ratelimiter:
+    instances:
+      orderService:
+        limit-for-period: 2
+        limit-refresh-period: 4s
+        timeout-duration: 0
+        register-health-indicator: true
+        event-consumer-buffer-size: 100
+
+
 
 management:
   health:
@@ -23,7 +49,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: '*'
   endpoint:
     health:
       show-details: always
