@@ -37,9 +37,14 @@ resilience4j:
       orderService:
         limit-for-period: 2
         limit-refresh-period: 4s
-        timeout-duration: 10s
+        timeout-duration: 10s # Specifies the maximum time a thread should wait to acquire permission before giving up.
         register-health-indicator: true
         event-consumer-buffer-size: 100
+  timelimiter:
+    instances:
+      orderService:
+        timeout-duration: 2s
+        cancel-running-future: true
 
 
 
