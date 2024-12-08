@@ -1,9 +1,11 @@
 package com.github.bruce_migeri.order_app.controller;
 
+import com.github.bruce_migeri.order_app.service.SlowService;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalTime;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class OrderController {
@@ -23,10 +26,13 @@ public class OrderController {
 
     private final RestTemplate restTemplate;
 
+    private final SlowService slowService;
+
     private Integer attempts = 1;
 
-    public OrderController(RestTemplate restTemplate) {
+    public OrderController(RestTemplate restTemplate, SlowService slowService) {
         this.restTemplate = restTemplate;
+        this.slowService = slowService;
     }
 
     @GetMapping("/order")
@@ -59,6 +65,12 @@ public class OrderController {
         String response = restTemplate.getForObject("http://localhost:8081/item", String.class);
         log.info("{} Call processing finished = {}", LocalTime.now(), Thread.currentThread().getName());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/time-limiter")
+    @TimeLimiter(name = ORDER_SERVICE)
+    public CompletableFuture<String> getOrder() {
+        return CompletableFuture.supplyAsync(slowService::slowMethod);
     }
 
     public ResponseEntity<String> orderFallback(Exception e) {
